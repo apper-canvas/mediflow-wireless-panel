@@ -1,0 +1,100 @@
+[
+  {
+    "Id": 1,
+    "patientId": "1",
+    "services": [
+      { "description": "Cardiology Consultation", "quantity": 1, "price": 250 },
+      { "description": "ECG", "quantity": 1, "price": 100 },
+      { "description": "Blood Work", "quantity": 1, "price": 150 }
+    ],
+    "totalAmount": 500,
+    "status": "paid",
+    "date": "2024-12-18",
+    "paidAt": "2024-12-19"
+  },
+  {
+    "Id": 2,
+    "patientId": "2",
+    "services": [
+      { "description": "Internal Medicine Consultation", "quantity": 1, "price": 200 },
+      { "description": "Comprehensive Metabolic Panel", "quantity": 1, "price": 120 }
+    ],
+    "totalAmount": 320,
+    "status": "pending",
+    "date": "2024-12-15",
+    "paidAt": null
+  },
+  {
+    "Id": 3,
+    "patientId": "3",
+    "services": [
+      { "description": "Orthopedic Consultation", "quantity": 1, "price": 300 },
+      { "description": "X-Ray Knee", "quantity": 1, "price": 180 }
+    ],
+    "totalAmount": 480,
+    "status": "paid",
+    "date": "2024-12-10",
+    "paidAt": "2024-12-12"
+  },
+  {
+    "Id": 4,
+    "patientId": "4",
+    "services": [
+      { "description": "Pediatric Consultation", "quantity": 1, "price": 180 },
+      { "description": "Vaccination - Flu", "quantity": 1, "price": 35 },
+      { "description": "Vaccination - Tdap", "quantity": 1, "price": 40 }
+    ],
+    "totalAmount": 255,
+    "status": "paid",
+    "date": "2024-12-21",
+    "paidAt": "2024-12-21"
+  },
+  {
+    "Id": 5,
+    "patientId": "5",
+    "services": [
+      { "description": "Cardiology Consultation", "quantity": 1, "price": 250 },
+      { "description": "Stress Test", "quantity": 1, "price": 400 }
+    ],
+    "totalAmount": 650,
+    "status": "pending",
+    "date": "2024-12-08",
+    "paidAt": null
+  },
+  {
+    "Id": 6,
+    "patientId": "6",
+    "services": [
+      { "description": "Dermatology Consultation", "quantity": 1, "price": 220 },
+      { "description": "Skin Biopsy", "quantity": 1, "price": 180 }
+    ],
+    "totalAmount": 400,
+    "status": "pending",
+    "date": "2024-12-05",
+    "paidAt": null
+  },
+  {
+    "Id": 7,
+    "patientId": "1",
+    "services": [
+      { "description": "Follow-up Consultation", "quantity": 1, "price": 150 },
+      { "description": "Blood Pressure Monitoring", "quantity": 1, "price": 50 }
+    ],
+    "totalAmount": 200,
+    "status": "paid",
+    "date": "2024-12-22",
+    "paidAt": "2024-12-22"
+  },
+  {
+    "Id": 8,
+    "patientId": "2",
+    "services": [
+      { "description": "Diabetes Management", "quantity": 1, "price": 180 },
+      { "description": "HbA1c Test", "quantity": 1, "price": 80 }
+    ],
+    "totalAmount": 260,
+    "status": "overdue",
+    "date": "2024-11-15",
+    "paidAt": null
+  }
+]

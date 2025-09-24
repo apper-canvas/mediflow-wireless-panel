@@ -1,0 +1,82 @@
+[
+  {
+    "Id": 1,
+    "firstName": "Amanda",
+    "lastName": "Smith",
+    "specialization": "Cardiology",
+    "phone": "+1-555-0201",
+    "email": "dr.smith@hospital.com",
+    "availability": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+    "consultationFee": 250
+  },
+  {
+    "Id": 2,
+    "firstName": "Robert",
+    "lastName": "Johnson",
+    "specialization": "Internal Medicine",
+    "phone": "+1-555-0202",
+    "email": "dr.johnson@hospital.com",
+    "availability": ["Monday", "Wednesday", "Friday"],
+    "consultationFee": 200
+  },
+  {
+    "Id": 3,
+    "firstName": "Jennifer",
+    "lastName": "Williams",
+    "specialization": "Pediatrics",
+    "phone": "+1-555-0203",
+    "email": "dr.williams@hospital.com",
+    "availability": ["Tuesday", "Thursday", "Saturday"],
+    "consultationFee": 180
+  },
+  {
+    "Id": 4,
+    "firstName": "David",
+    "lastName": "Brown",
+    "specialization": "Orthopedics",
+    "phone": "+1-555-0204",
+    "email": "dr.brown@hospital.com",
+    "availability": ["Monday", "Tuesday", "Thursday", "Friday"],
+    "consultationFee": 300
+  },
+  {
+    "Id": 5,
+    "firstName": "Lisa",
+    "lastName": "Davis",
+    "specialization": "Dermatology",
+    "phone": "+1-555-0205",
+    "email": "dr.davis@hospital.com",
+    "availability": ["Wednesday", "Thursday", "Friday"],
+    "consultationFee": 220
+  },
+  {
+    "Id": 6,
+    "firstName": "Mark",
+    "lastName": "Wilson",
+    "specialization": "Emergency Medicine",
+    "phone": "+1-555-0206",
+    "email": "dr.wilson@hospital.com",
+    "availability": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+    "consultationFee": 350
+  },
+  {
+    "Id": 7,
+    "firstName": "Karen",
+    "lastName": "Anderson",
+    "specialization": "Neurology",
+    "phone": "+1-555-0207",
+    "email": "dr.anderson@hospital.com",
+    "availability": ["Tuesday", "Wednesday", "Friday"],
+    "consultationFee": 400
+  },
+  {
+    "Id": 8,
+    "firstName": "Steven",
+    "lastName": "Taylor",
+    "specialization": "Oncology",
+    "phone": "+1-555-0208",
+    "email": "dr.taylor@hospital.com",
+    "availability": ["Monday", "Wednesday", "Thursday"],
+    "consultationFee": 450
+  }
+]

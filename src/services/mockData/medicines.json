@@ -1,0 +1,110 @@
+[
+  {
+    "Id": 1,
+    "name": "Lisinopril 10mg",
+    "category": "Cardiovascular",
+    "stock": 150,
+    "minThreshold": 25,
+    "price": 12.50,
+    "expiryDate": "2025-08-15"
+  },
+  {
+    "Id": 2,
+    "name": "Metformin 500mg",
+    "category": "Diabetes",
+    "stock": 200,
+    "minThreshold": 30,
+    "price": 8.75,
+    "expiryDate": "2025-06-20"
+  },
+  {
+    "Id": 3,
+    "name": "Aspirin 81mg",
+    "category": "Pain Relief",
+    "stock": 300,
+    "minThreshold": 50,
+    "price": 5.25,
+    "expiryDate": "2026-01-10"
+  },
+  {
+    "Id": 4,
+    "name": "Ibuprofen 400mg",
+    "category": "Pain Relief",
+    "stock": 180,
+    "minThreshold": 40,
+    "price": 7.50,
+    "expiryDate": "2025-11-30"
+  },
+  {
+    "Id": 5,
+    "name": "Atorvastatin 20mg",
+    "category": "Cardiovascular",
+    "stock": 15,
+    "minThreshold": 20,
+    "price": 18.30,
+    "expiryDate": "2025-07-25"
+  },
+  {
+    "Id": 6,
+    "name": "Levothyroxine 50mcg",
+    "category": "Endocrine",
+    "stock": 120,
+    "minThreshold": 25,
+    "price": 15.80,
+    "expiryDate": "2025-09-12"
+  },
+  {
+    "Id": 7,
+    "name": "Metoprolol 50mg",
+    "category": "Cardiovascular",
+    "stock": 8,
+    "minThreshold": 15,
+    "price": 14.20,
+    "expiryDate": "2025-04-18"
+  },
+  {
+    "Id": 8,
+    "name": "Amoxicillin 500mg",
+    "category": "Antibiotic",
+    "stock": 75,
+    "minThreshold": 30,
+    "price": 22.40,
+    "expiryDate": "2025-03-22"
+  },
+  {
+    "Id": 9,
+    "name": "Omeprazole 20mg",
+    "category": "Gastroenterology",
+    "stock": 95,
+    "minThreshold": 20,
+    "price": 11.60,
+    "expiryDate": "2025-10-05"
+  },
+  {
+    "Id": 10,
+    "name": "Acetaminophen 500mg",
+    "category": "Pain Relief",
+    "stock": 0,
+    "minThreshold": 50,
+    "price": 6.80,
+    "expiryDate": "2025-12-31"
+  },
+  {
+    "Id": 11,
+    "name": "Insulin Glargine",
+    "category": "Diabetes",
+    "stock": 25,
+    "minThreshold": 15,
+    "price": 85.50,
+    "expiryDate": "2025-02-14"
+  },
+  {
+    "Id": 12,
+    "name": "Ketoconazole Cream 2%",
+    "category": "Dermatology",
+    "stock": 40,
+    "minThreshold": 10,
+    "price": 16.75,
+    "expiryDate": "2025-05-08"
+  }
+]

@@ -1,0 +1,116 @@
+[
+  {
+    "Id": 1,
+    "firstName": "John",
+    "lastName": "Doe",
+    "dateOfBirth": "1985-03-15",
+    "gender": "male",
+    "phone": "+1-555-0123",
+    "email": "john.doe@email.com",
+    "address": "123 Main Street, City, State 12345",
+    "emergencyContact": {
+      "name": "Jane Doe",
+      "phone": "+1-555-0124",
+      "relationship": "spouse"
+    },
+    "bloodType": "A+",
+    "allergies": ["Penicillin", "Shellfish"],
+    "medications": ["Lisinopril 10mg"],
+    "registrationDate": "2024-01-15"
+  },
+  {
+    "Id": 2,
+    "firstName": "Sarah",
+    "lastName": "Johnson",
+    "dateOfBirth": "1992-07-22",
+    "gender": "female",
+    "phone": "+1-555-0125",
+    "email": "sarah.johnson@email.com",
+    "address": "456 Oak Avenue, City, State 12345",
+    "emergencyContact": {
+      "name": "Michael Johnson",
+      "phone": "+1-555-0126",
+      "relationship": "spouse"
+    },
+    "bloodType": "B+",
+    "allergies": ["Latex"],
+    "medications": ["Metformin 500mg"],
+    "registrationDate": "2024-01-20"
+  },
+  {
+    "Id": 3,
+    "firstName": "Michael",
+    "lastName": "Brown",
+    "dateOfBirth": "1978-11-08",
+    "gender": "male",
+    "phone": "+1-555-0127",
+    "email": "michael.brown@email.com",
+    "address": "789 Pine Road, City, State 12345",
+    "emergencyContact": {
+      "name": "Lisa Brown",
+      "phone": "+1-555-0128",
+      "relationship": "spouse"
+    },
+    "bloodType": "O-",
+    "allergies": [],
+    "medications": ["Aspirin 81mg"],
+    "registrationDate": "2024-02-01"
+  },
+  {
+    "Id": 4,
+    "firstName": "Emma",
+    "lastName": "Davis",
+    "dateOfBirth": "1995-04-12",
+    "gender": "female",
+    "phone": "+1-555-0129",
+    "email": "emma.davis@email.com",
+    "address": "321 Elm Street, City, State 12345",
+    "emergencyContact": {
+      "name": "Robert Davis",
+      "phone": "+1-555-0130",
+      "relationship": "parent"
+    },
+    "bloodType": "AB+",
+    "allergies": ["Codeine"],
+    "medications": [],
+    "registrationDate": "2024-02-10"
+  },
+  {
+    "Id": 5,
+    "firstName": "James",
+    "lastName": "Wilson",
+    "dateOfBirth": "1960-12-03",
+    "gender": "male",
+    "phone": "+1-555-0131",
+    "email": "james.wilson@email.com",
+    "address": "654 Maple Drive, City, State 12345",
+    "emergencyContact": {
+      "name": "Mary Wilson",
+      "phone": "+1-555-0132",
+      "relationship": "spouse"
+    },
+    "bloodType": "A-",
+    "allergies": ["Iodine"],
+    "medications": ["Atorvastatin 20mg", "Metoprolol 50mg"],
+    "registrationDate": "2024-02-15"
+  },
+  {
+    "Id": 6,
+    "firstName": "Olivia",
+    "lastName": "Martinez",
+    "dateOfBirth": "1988-09-18",
+    "gender": "female",
+    "phone": "+1-555-0133",
+    "email": "olivia.martinez@email.com",
+    "address": "987 Cedar Lane, City, State 12345",
+    "emergencyContact": {
+      "name": "Carlos Martinez",
+      "phone": "+1-555-0134",
+      "relationship": "spouse"
+    },
+    "bloodType": "O+",
+    "allergies": ["Sulfa drugs"],
+    "medications": ["Levothyroxine 50mcg"],
+    "registrationDate": "2024-03-01"
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "Id": 1,
+    "patientId": "1",
+    "doctorId": "1",
+    "date": "2024-12-18",
+    "diagnosis": "Mild hypertension, well controlled with medication",
+    "treatment": "Continue current medication regimen. Monitor blood pressure daily.",
+    "prescription": ["Lisinopril 10mg daily", "Aspirin 81mg daily"],
+    "notes": "Patient reports feeling well. Blood pressure readings stable. Next appointment in 3 months."
+  },
+  {
+    "Id": 2,
+    "patientId": "2",
+    "doctorId": "2",
+    "date": "2024-12-15",
+    "diagnosis": "Type 2 Diabetes Mellitus, stable",
+    "treatment": "Continue metformin. Dietary counseling provided. Regular exercise recommended.",
+    "prescription": ["Metformin 500mg twice daily"],
+    "notes": "HbA1c levels improved. Patient showing good compliance with treatment plan."
+  },
+  {
+    "Id": 3,
+    "patientId": "4",
+    "doctorId": "3",
+    "date": "2024-12-21",
+    "diagnosis": "Routine immunization update",
+    "treatment": "Administered annual flu vaccine and Tdap booster",
+    "prescription": [],
+    "notes": "No adverse reactions observed. Immunization record updated."
+  },
+  {
+    "Id": 4,
+    "patientId": "3",
+    "doctorId": "4",
+    "date": "2024-12-10",
+    "diagnosis": "Osteoarthritis of the right knee",
+    "treatment": "Physical therapy referral. Anti-inflammatory medication prescribed.",
+    "prescription": ["Ibuprofen 400mg three times daily", "Glucosamine supplement"],
+    "notes": "Patient reports moderate improvement with current treatment. Continue PT sessions."
+  },
+  {
+    "Id": 5,
+    "patientId": "6",
+    "doctorId": "5",
+    "date": "2024-12-05",
+    "diagnosis": "Seborrheic dermatitis",
+    "treatment": "Topical antifungal cream prescribed. Gentle skincare routine recommended.",
+    "prescription": ["Ketoconazole cream 2%", "Gentle moisturizer"],
+    "notes": "Skin condition showing improvement. Follow-up in 2 weeks if symptoms persist."
+  },
+  {
+    "Id": 6,
+    "patientId": "5",
+    "doctorId": "1",
+    "date": "2024-12-08",
+    "diagnosis": "Stable angina",
+    "treatment": "Medication adjustment. Stress test scheduled. Lifestyle modifications discussed.",
+    "prescription": ["Atorvastatin 20mg daily", "Metoprolol 50mg twice daily", "Nitroglycerin as needed"],
+    "notes": "Patient tolerating current medications well. Stress test recommended within 2 weeks."
+  }
+]

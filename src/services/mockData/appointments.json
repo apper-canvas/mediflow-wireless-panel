@@ -1,0 +1,82 @@
+[
+  {
+    "Id": 1,
+    "patientId": "1",
+    "doctorId": "1",
+    "date": "2024-12-20",
+    "time": "09:00",
+    "status": "confirmed",
+    "notes": "Follow-up for heart condition",
+    "createdAt": "2024-12-15"
+  },
+  {
+    "Id": 2,
+    "patientId": "2",
+    "doctorId": "2",
+    "date": "2024-12-20",
+    "time": "10:30",
+    "status": "scheduled",
+    "notes": "Annual physical examination",
+    "createdAt": "2024-12-16"
+  },
+  {
+    "Id": 3,
+    "patientId": "3",
+    "doctorId": "4",
+    "date": "2024-12-21",
+    "time": "14:00",
+    "status": "confirmed",
+    "notes": "Knee pain evaluation",
+    "createdAt": "2024-12-14"
+  },
+  {
+    "Id": 4,
+    "patientId": "4",
+    "doctorId": "3",
+    "date": "2024-12-21",
+    "time": "11:00",
+    "status": "completed",
+    "notes": "Vaccination update",
+    "createdAt": "2024-12-10"
+  },
+  {
+    "Id": 5,
+    "patientId": "5",
+    "doctorId": "1",
+    "date": "2024-12-22",
+    "time": "15:30",
+    "status": "scheduled",
+    "notes": "Chest pain consultation",
+    "createdAt": "2024-12-17"
+  },
+  {
+    "Id": 6,
+    "patientId": "6",
+    "doctorId": "5",
+    "date": "2024-12-23",
+    "time": "13:00",
+    "status": "confirmed",
+    "notes": "Skin lesion examination",
+    "createdAt": "2024-12-18"
+  },
+  {
+    "Id": 7,
+    "patientId": "1",
+    "doctorId": "2",
+    "date": "2024-12-18",
+    "time": "09:30",
+    "status": "completed",
+    "notes": "Blood pressure check",
+    "createdAt": "2024-12-12"
+  },
+  {
+    "Id": 8,
+    "patientId": "3",
+    "doctorId": "6",
+    "date": "2024-12-19",
+    "time": "16:00",
+    "status": "cancelled",
+    "notes": "Emergency consultation",
+    "createdAt": "2024-12-19"
+  }
+]
