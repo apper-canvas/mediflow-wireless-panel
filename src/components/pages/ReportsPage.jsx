@@ -61,9 +61,9 @@ const ReportsPage = () => {
     }
   };
 
-  const getFilteredData = (data, dateField) => {
+const getFilteredData = (data, dateField) => {
     const { start, end } = getDateRange();
-return data.filter(item => {
+    return data.filter(item => {
       if (!item[dateField] || isNaN(new Date(item[dateField]))) return false;
       const itemDate = new Date(item[dateField]);
       return itemDate >= start && itemDate <= end;
@@ -79,9 +79,9 @@ return data.filter(item => {
         male: reportData.patients.filter(p => p.gender === "male").length,
         female: reportData.patients.filter(p => p.gender === "female").length,
         other: reportData.patients.filter(p => p.gender === "other").length
-      },
+},
       byAgeGroup: {
-"0-18": reportData.patients.filter(p => {
+        "0-18": reportData.patients.filter(p => {
           if (!p.dateOfBirth || isNaN(new Date(p.dateOfBirth))) return false;
           const age = new Date().getFullYear() - new Date(p.dateOfBirth).getFullYear();
           return age <= 18;
@@ -99,9 +99,8 @@ return data.filter(item => {
         "60+": reportData.patients.filter(p => {
           if (!p.dateOfBirth || isNaN(new Date(p.dateOfBirth))) return false;
           const age = new Date().getFullYear() - new Date(p.dateOfBirth).getFullYear();
-          return age > 60;
+return age > 60;
         }).length
-      }
       }
     };
   };
@@ -317,8 +316,8 @@ if (!m.expiryDate || isNaN(new Date(m.expiryDate))) return false;
           </div>
         </CardContent>
       </Card>
-    </div>
-  );
+</div>
+);
 };
 
 export default ReportsPage;
