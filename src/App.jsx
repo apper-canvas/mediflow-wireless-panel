@@ -18,13 +18,6 @@ import DoctorsPage from "@/components/pages/DoctorsPage";
 import HomePage from "@/components/pages/HomePage";
 import ReportsPage from "@/components/pages/ReportsPage";
 import PatientsPage from "@/components/pages/PatientsPage";
-import patientConfig from "@/apper/metadata/tables/patient_c.json";
-import doctorConfig from "@/apper/metadata/tables/doctor_c.json";
-import appointmentConfig from "@/apper/metadata/tables/appointment_c.json";
-import recordConfig from "@/apper/metadata/tables/record_c.json";
-import billConfig from "@/apper/metadata/tables/bill_c.json";
-import medicineConfig from "@/apper/metadata/tables/medicine_c.json";
-import secrets from "@/apper/metadata/edge-functions/secrets.json";
 
 // Create auth context
 export const AuthContext = createContext(null);
