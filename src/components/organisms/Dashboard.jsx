@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/atoms/Card";
-import StatCard from "@/components/molecules/StatCard";
-import ApperIcon from "@/components/ApperIcon";
-import Loading from "@/components/ui/Loading";
-import Error from "@/components/ui/Error";
+import React, { useEffect, useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/atoms/Card";
 import { patientService } from "@/services/api/patientService";
 import { appointmentService } from "@/services/api/appointmentService";
 import { doctorService } from "@/services/api/doctorService";
 import { billService } from "@/services/api/billService";
 import { medicineService } from "@/services/api/medicineService";
 import { format } from "date-fns";
+import ApperIcon from "@/components/ApperIcon";
+import StatCard from "@/components/molecules/StatCard";
+import Loading from "@/components/ui/Loading";
+import Error from "@/components/ui/Error";
 
 const Dashboard = () => {
   const [stats, setStats] = useState({
@@ -35,13 +35,18 @@ const Dashboard = () => {
         billService.getAll(),
         medicineService.getAll()
       ]);
-
-      // Calculate stats
+// Today's appointments
       const today = format(new Date(), "yyyy-MM-dd");
-      const todaysAppointments = appointments.filter(apt => apt.date === today).length;
-      const pendingBills = bills.filter(bill => bill.status === "pending").length;
+      const todaysAppointments = appointments.filter(apt => 
+        apt.date && !isNaN(new Date(apt.date)) && apt.date === today
+      ).length;
+
+// Pending bills
+      const pendingBills = bills.filter(bill => bill.status === 'pending').length;
+
+      // Low stock medicines
       const lowStockMedicines = medicines.filter(medicine => 
-        medicine.stock <= medicine.minThreshold
+        medicine.stock <= (medicine.minThreshold || 10)
       ).length;
 
       setStats({

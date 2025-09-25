@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/atoms/Card";
-import Button from "@/components/atoms/Button";
-import Badge from "@/components/atoms/Badge";
-import SearchBar from "@/components/molecules/SearchBar";
-import ApperIcon from "@/components/ApperIcon";
-import Loading from "@/components/ui/Loading";
-import Error from "@/components/ui/Error";
-import Empty from "@/components/ui/Empty";
+import React, { useEffect, useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/atoms/Card";
 import { appointmentService } from "@/services/api/appointmentService";
 import { patientService } from "@/services/api/patientService";
 import { doctorService } from "@/services/api/doctorService";
 import { toast } from "react-toastify";
 import { format } from "date-fns";
+import ApperIcon from "@/components/ApperIcon";
+import SearchBar from "@/components/molecules/SearchBar";
+import Loading from "@/components/ui/Loading";
+import Empty from "@/components/ui/Empty";
+import Error from "@/components/ui/Error";
+import Button from "@/components/atoms/Button";
+import Badge from "@/components/atoms/Badge";
 
 const AppointmentList = ({ onSelectAppointment, onAddAppointment }) => {
   const [appointments, setAppointments] = useState([]);
@@ -181,12 +181,12 @@ const AppointmentList = ({ onSelectAppointment, onAddAppointment }) => {
                     <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 text-sm text-secondary-600">
                       <span className="flex items-center gap-1">
                         <ApperIcon name="UserCheck" className="w-3 h-3" />
-                        {getDoctorName(appointment.doctorId)}
+{getDoctorName(appointment.doctorId)}
                       </span>
-                      <span className="flex items-center gap-1">
-                        <ApperIcon name="Calendar" className="w-3 h-3" />
-                        {format(new Date(appointment.date), "MMM dd, yyyy")}
-                      </span>
+                      <div className="flex items-center text-sm text-secondary-600">
+                        <ApperIcon name="Calendar" className="w-4 h-4 mr-1" />
+                        {appointment.date && !isNaN(new Date(appointment.date)) ? format(new Date(appointment.date), "MMM dd, yyyy") : "Invalid date"}
+                      </div>
                       <span className="flex items-center gap-1">
                         <ApperIcon name="Clock" className="w-3 h-3" />
                         {appointment.time}

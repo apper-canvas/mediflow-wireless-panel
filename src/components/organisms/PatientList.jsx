@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/atoms/Card";
-import Button from "@/components/atoms/Button";
-import Badge from "@/components/atoms/Badge";
-import SearchBar from "@/components/molecules/SearchBar";
-import ApperIcon from "@/components/ApperIcon";
-import Loading from "@/components/ui/Loading";
-import Error from "@/components/ui/Error";
-import Empty from "@/components/ui/Empty";
+import React, { useEffect, useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/atoms/Card";
 import { patientService } from "@/services/api/patientService";
 import { toast } from "react-toastify";
 import { format } from "date-fns";
+import ApperIcon from "@/components/ApperIcon";
+import SearchBar from "@/components/molecules/SearchBar";
+import Loading from "@/components/ui/Loading";
+import Empty from "@/components/ui/Empty";
+import Error from "@/components/ui/Error";
+import Button from "@/components/atoms/Button";
+import Badge from "@/components/atoms/Badge";
 
 const PatientList = ({ onSelectPatient, onAddPatient }) => {
   const [patients, setPatients] = useState([]);
@@ -121,12 +121,12 @@ const PatientList = ({ onSelectPatient, onAddPatient }) => {
                         <ApperIcon name="Mail" className="w-3 h-3" />
                         {patient.email}
                       </span>
-                      <span className="flex items-center gap-1">
-                        <ApperIcon name="Calendar" className="w-3 h-3" />
-                        Age: {new Date().getFullYear() - new Date(patient.dateOfBirth).getFullYear()}
+<span className="text-xs text-secondary-500">
+                        Age: {patient.dateOfBirth && !isNaN(new Date(patient.dateOfBirth)) ? 
+                          new Date().getFullYear() - new Date(patient.dateOfBirth).getFullYear() : "N/A"}
                       </span>
                     </div>
-                    <div className="flex items-center gap-2 mt-2">
+                    <div className="flex items-center gap-2 mt-1">
                       <Badge variant="secondary" className="text-xs">
                         {patient.gender}
                       </Badge>
