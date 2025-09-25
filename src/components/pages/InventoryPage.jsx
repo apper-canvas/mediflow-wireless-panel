@@ -269,8 +269,8 @@ const InventoryPage = () => {
                           ${medicine.price.toFixed(2)}
                         </td>
                         <td className="py-4 px-4">
-                          <div className={`text-sm ${expiringSoon ? "text-warning-600" : "text-secondary-600"}`}>
-                            {format(new Date(medicine.expiryDate), "MMM dd, yyyy")}
+<div className={`text-sm ${expiringSoon ? "text-warning-600" : "text-secondary-600"}`}>
+                            {medicine.expiryDate && !isNaN(new Date(medicine.expiryDate)) ? format(new Date(medicine.expiryDate), "MMM dd, yyyy") : "Invalid date"}
                             {expiringSoon && (
                               <div className="flex items-center gap-1 mt-1">
                                 <ApperIcon name="AlertTriangle" className="w-3 h-3" />

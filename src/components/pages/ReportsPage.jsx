@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/atoms/Card";
-import Button from "@/components/atoms/Button";
-import ApperIcon from "@/components/ApperIcon";
-import Loading from "@/components/ui/Loading";
-import Error from "@/components/ui/Error";
+import React, { useEffect, useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/atoms/Card";
 import { patientService } from "@/services/api/patientService";
 import { appointmentService } from "@/services/api/appointmentService";
 import { billService } from "@/services/api/billService";
 import { medicineService } from "@/services/api/medicineService";
 import { format, subDays, subMonths } from "date-fns";
+import ApperIcon from "@/components/ApperIcon";
+import Loading from "@/components/ui/Loading";
+import Error from "@/components/ui/Error";
+import Button from "@/components/atoms/Button";
 
 const ReportsPage = () => {
   const [reportData, setReportData] = useState({
@@ -63,7 +63,8 @@ const ReportsPage = () => {
 
   const getFilteredData = (data, dateField) => {
     const { start, end } = getDateRange();
-    return data.filter(item => {
+return data.filter(item => {
+      if (!item[dateField] || isNaN(new Date(item[dateField]))) return false;
       const itemDate = new Date(item[dateField]);
       return itemDate >= start && itemDate <= end;
     });
@@ -80,22 +81,27 @@ const ReportsPage = () => {
         other: reportData.patients.filter(p => p.gender === "other").length
       },
       byAgeGroup: {
-        "0-18": reportData.patients.filter(p => {
+"0-18": reportData.patients.filter(p => {
+          if (!p.dateOfBirth || isNaN(new Date(p.dateOfBirth))) return false;
           const age = new Date().getFullYear() - new Date(p.dateOfBirth).getFullYear();
           return age <= 18;
         }).length,
         "19-35": reportData.patients.filter(p => {
+          if (!p.dateOfBirth || isNaN(new Date(p.dateOfBirth))) return false;
           const age = new Date().getFullYear() - new Date(p.dateOfBirth).getFullYear();
           return age >= 19 && age <= 35;
         }).length,
         "36-60": reportData.patients.filter(p => {
+          if (!p.dateOfBirth || isNaN(new Date(p.dateOfBirth))) return false;
           const age = new Date().getFullYear() - new Date(p.dateOfBirth).getFullYear();
           return age >= 36 && age <= 60;
         }).length,
         "60+": reportData.patients.filter(p => {
+          if (!p.dateOfBirth || isNaN(new Date(p.dateOfBirth))) return false;
           const age = new Date().getFullYear() - new Date(p.dateOfBirth).getFullYear();
           return age > 60;
         }).length
+      }
       }
     };
   };
@@ -141,6 +147,7 @@ const ReportsPage = () => {
     const lowStock = reportData.medicines.filter(m => m.stock <= m.minThreshold);
     const outOfStock = reportData.medicines.filter(m => m.stock === 0);
     const expiringSoon = reportData.medicines.filter(m => {
+if (!m.expiryDate || isNaN(new Date(m.expiryDate))) return false;
       const expiry = new Date(m.expiryDate);
       const thirtyDaysFromNow = new Date(Date.now() + (30 * 24 * 60 * 60 * 1000));
       return expiry <= thirtyDaysFromNow;

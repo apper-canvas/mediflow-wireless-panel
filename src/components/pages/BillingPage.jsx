@@ -226,7 +226,7 @@ const BillingPage = () => {
                         </span>
                         <span className="flex items-center gap-1">
                           <ApperIcon name="Calendar" className="w-3 h-3" />
-                          {format(new Date(bill.date), "MMM dd, yyyy")}
+{bill.date && !isNaN(new Date(bill.date)) ? format(new Date(bill.date), "MMM dd, yyyy") : "Invalid date"}
                         </span>
                         <span className="flex items-center gap-1">
                           <ApperIcon name="DollarSign" className="w-3 h-3" />
@@ -238,8 +238,8 @@ const BillingPage = () => {
                           {bill.status}
                         </Badge>
                         {bill.paidAt && (
-                          <span className="text-xs text-secondary-500">
-                            Paid on {format(new Date(bill.paidAt), "MMM dd, yyyy")}
+<span className="text-xs text-secondary-500">
+                            Paid on {bill.paidAt && !isNaN(new Date(bill.paidAt)) ? format(new Date(bill.paidAt), "MMM dd, yyyy") : "Invalid date"}
                           </span>
                         )}
                       </div>

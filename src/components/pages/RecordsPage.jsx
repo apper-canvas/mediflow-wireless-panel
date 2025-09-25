@@ -131,7 +131,7 @@ const RecordsPage = () => {
                           </span>
                           <span className="flex items-center gap-1">
                             <ApperIcon name="Calendar" className="w-3 h-3" />
-                            {format(new Date(record.date), "MMM dd, yyyy")}
+{record.date && !isNaN(new Date(record.date)) ? format(new Date(record.date), "MMM dd, yyyy") : "Invalid date"}
                           </span>
                         </div>
                       </div>
