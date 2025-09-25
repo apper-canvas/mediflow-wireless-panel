@@ -43,30 +43,30 @@ const InventoryPage = () => {
 
     // Apply search filter
     if (searchTerm) {
-      filtered = filtered.filter(medicine =>
-        medicine.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        medicine.category.toLowerCase().includes(searchTerm.toLowerCase())
+filtered = filtered.filter(medicine =>
+        medicine.name_c?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        medicine.category_c?.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
     // Apply category filter
     if (categoryFilter) {
-      filtered = filtered.filter(medicine => medicine.category === categoryFilter);
+filtered = filtered.filter(medicine => medicine.category_c === categoryFilter);
     }
 
     // Apply stock filter
-    if (stockFilter === "low") {
-      filtered = filtered.filter(medicine => medicine.stock <= medicine.minThreshold);
+if (stockFilter === "low") {
+      filtered = filtered.filter(medicine => medicine.stock_c <= medicine.min_threshold_c);
     } else if (stockFilter === "out") {
-      filtered = filtered.filter(medicine => medicine.stock === 0);
+      filtered = filtered.filter(medicine => medicine.stock_c === 0);
     }
 
     setFilteredMedicines(filtered);
   }, [searchTerm, categoryFilter, stockFilter, medicines]);
 
-  const getStockStatus = (medicine) => {
-    if (medicine.stock === 0) return { status: "Out of Stock", variant: "error" };
-    if (medicine.stock <= medicine.minThreshold) return { status: "Low Stock", variant: "warning" };
+const getStockStatus = (medicine) => {
+    if (medicine.stock_c === 0) return { status: "Out of Stock", variant: "error" };
+    if (medicine.stock_c <= medicine.min_threshold_c) return { status: "Low Stock", variant: "warning" };
     return { status: "In Stock", variant: "success" };
   };
 
@@ -82,16 +82,16 @@ const InventoryPage = () => {
     return categories.sort();
   };
 
-  const getLowStockCount = () => {
-    return medicines.filter(m => m.stock <= m.minThreshold).length;
+const getLowStockCount = () => {
+    return medicines.filter(m => m.stock_c <= m.min_threshold_c).length;
   };
 
-  const getOutOfStockCount = () => {
-    return medicines.filter(m => m.stock === 0).length;
+const getOutOfStockCount = () => {
+    return medicines.filter(m => m.stock_c === 0).length;
   };
 
-  const getTotalValue = () => {
-    return medicines.reduce((sum, medicine) => sum + (medicine.stock * medicine.price), 0);
+const getTotalValue = () => {
+    return medicines.reduce((sum, medicine) => sum + (medicine.stock_c * medicine.price_c), 0);
   };
 
   if (loading) return <Loading />;
@@ -246,8 +246,8 @@ const InventoryPage = () => {
                               <ApperIcon name="Pill" className="w-5 h-5 text-white" />
                             </div>
                             <div>
-                              <div className="font-medium text-secondary-900">{medicine.name}</div>
-                              <div className="text-sm text-secondary-500">Min: {medicine.minThreshold}</div>
+<div className="font-medium text-secondary-900">{medicine.name_c}</div>
+                              <div className="text-sm text-secondary-500">Min: {medicine.min_threshold_c}</div>
                             </div>
                           </div>
                         </td>
@@ -257,20 +257,20 @@ const InventoryPage = () => {
                           </Badge>
                         </td>
                         <td className="py-4 px-4">
-                          <span className={`font-semibold ${
-                            medicine.stock === 0 ? "text-error-600" :
-                            medicine.stock <= medicine.minThreshold ? "text-warning-600" :
+<span className={`font-semibold ${
+                            medicine.stock_c === 0 ? "text-error-600" :
+                            medicine.stock_c <= medicine.min_threshold_c ? "text-warning-600" :
                             "text-success-600"
                           }`}>
-                            {medicine.stock}
+                            {medicine.stock_c}
                           </span>
                         </td>
-                        <td className="py-4 px-4 text-secondary-900">
-                          ${medicine.price.toFixed(2)}
+<td className="py-4 px-4 text-secondary-900">
+                          ${medicine.price_c?.toFixed(2) || '0.00'}
                         </td>
                         <td className="py-4 px-4">
 <div className={`text-sm ${expiringSoon ? "text-warning-600" : "text-secondary-600"}`}>
-                            {medicine.expiryDate && !isNaN(new Date(medicine.expiryDate)) ? format(new Date(medicine.expiryDate), "MMM dd, yyyy") : "Invalid date"}
+                            {medicine.expiry_date_c && !isNaN(new Date(medicine.expiry_date_c)) ? format(new Date(medicine.expiry_date_c), "MMM dd, yyyy") : "Invalid date"}
                             {expiringSoon && (
                               <div className="flex items-center gap-1 mt-1">
                                 <ApperIcon name="AlertTriangle" className="w-3 h-3" />
