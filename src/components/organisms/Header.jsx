@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import SearchBar from "@/components/molecules/SearchBar";
 
 const Header = ({ onMenuClick, searchValue, onSearchChange }) => {
+  const { logout } = useContext(AuthContext);
   return (
     <header className="bg-white/95 backdrop-blur-lg border-b border-secondary-200 h-16 flex items-center justify-between px-4 sm:px-6 lg:px-8">
       <div className="flex items-center gap-4">
@@ -49,8 +50,7 @@ const Header = ({ onMenuClick, searchValue, onSearchChange }) => {
             <Button
               variant="outline"
               size="sm"
-              onClick={() => {
-                const { logout } = useContext(AuthContext);
+onClick={() => {
                 logout();
               }}
             >

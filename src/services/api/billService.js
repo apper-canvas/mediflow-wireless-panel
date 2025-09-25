@@ -210,5 +210,3 @@ class BillService {
 }
 
 export const billService = new BillService();
-
-export const billService = new BillService();

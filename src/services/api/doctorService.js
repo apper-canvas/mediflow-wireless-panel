@@ -184,4 +184,3 @@ class DoctorService {
 }
 
 export const doctorService = new DoctorService();
-export const doctorService = new DoctorService();

@@ -246,5 +246,3 @@ class MedicineService {
 }
 
 export const medicineService = new MedicineService();
-
-export const medicineService = new MedicineService();

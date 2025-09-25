@@ -215,5 +215,3 @@ class RecordService {
 }
 
 export const recordService = new RecordService();
-
-export const recordService = new RecordService();
