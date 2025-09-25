@@ -1,20 +1,26 @@
-import React, { useState, useEffect } from "react";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/atoms/Card";
+import React, { useEffect, useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/atoms/Card";
+import { doctorService } from "@/services/api/doctorService";
+import { toast } from "react-toastify";
+import ApperIcon from "@/components/ApperIcon";
+import SearchBar from "@/components/molecules/SearchBar";
+import Loading from "@/components/ui/Loading";
+import Empty from "@/components/ui/Empty";
+import Error from "@/components/ui/Error";
 import Button from "@/components/atoms/Button";
 import Badge from "@/components/atoms/Badge";
-import SearchBar from "@/components/molecules/SearchBar";
-import ApperIcon from "@/components/ApperIcon";
-import Loading from "@/components/ui/Loading";
-import Error from "@/components/ui/Error";
-import Empty from "@/components/ui/Empty";
-import { doctorService } from "@/services/api/doctorService";
 
 const DoctorsPage = () => {
-  const [doctors, setDoctors] = useState([]);
+const [doctors, setDoctors] = useState([]);
   const [filteredDoctors, setFilteredDoctors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [showModal, setShowModal] = useState(false);
+
+const handleAddDoctor = () => {
+    setShowModal(true);
+  };
 
   const loadDoctors = async () => {
     try {
@@ -28,7 +34,7 @@ const DoctorsPage = () => {
     } finally {
       setLoading(false);
     }
-  };
+};
 
   useEffect(() => {
     loadDoctors();
@@ -67,7 +73,7 @@ const DoctorsPage = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full sm:w-80"
               />
-              <Button className="flex items-center gap-2">
+<Button onClick={handleAddDoctor} className="flex items-center gap-2">
                 <ApperIcon name="UserPlus" className="w-4 h-4" />
                 Add Doctor
               </Button>
@@ -75,6 +81,7 @@ const DoctorsPage = () => {
           </div>
         </CardHeader>
         <CardContent>
+{showModal && <DoctorModal />}
           {filteredDoctors.length === 0 ? (
             <Empty
               title="No doctors found"
@@ -139,9 +146,179 @@ const DoctorsPage = () => {
             </div>
           )}
         </CardContent>
-      </Card>
+</Card>
     </div>
   );
+
+  function DoctorModal() {
+    const [formData, setFormData] = useState({
+      firstName: "",
+      lastName: "",
+      specialization: "",
+      phone: "",
+      email: "",
+      consultationFee: ""
+    });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const handleInputChange = (e) => {
+      const { name, value } = e.target;
+      setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      setIsSubmitting(true);
+
+      try {
+        const doctorData = {
+          ...formData,
+          consultationFee: parseFloat(formData.consultationFee) || 0
+        };
+        
+        await doctorService.create(doctorData);
+        toast.success("Doctor added successfully!");
+        setShowModal(false);
+        loadDoctors();
+      } catch (err) {
+        toast.error("Failed to add doctor. Please try again.");
+      } finally {
+        setIsSubmitting(false);
+      }
+    };
+
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div className="bg-white rounded-lg shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto">
+          <div className="p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-semibold text-secondary-900">Add New Doctor</h2>
+              <button
+                onClick={() => setShowModal(false)}
+                className="text-secondary-500 hover:text-secondary-700"
+                disabled={isSubmitting}
+              >
+                <ApperIcon name="X" className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-secondary-700 mb-1">
+                    First Name *
+                  </label>
+                  <input
+                    type="text"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-3 py-2 border border-secondary-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-secondary-700 mb-1">
+                    Last Name *
+                  </label>
+                  <input
+                    type="text"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-3 py-2 border border-secondary-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-secondary-700 mb-1">
+                  Specialization *
+                </label>
+                <input
+                  type="text"
+                  name="specialization"
+                  value={formData.specialization}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full px-3 py-2 border border-secondary-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-secondary-700 mb-1">
+                  Phone *
+                </label>
+                <input
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full px-3 py-2 border border-secondary-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-secondary-700 mb-1">
+                  Email *
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full px-3 py-2 border border-secondary-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-secondary-700 mb-1">
+                  Consultation Fee
+                </label>
+                <input
+                  type="number"
+                  name="consultationFee"
+                  value={formData.consultationFee}
+                  onChange={handleInputChange}
+                  min="0"
+                  step="0.01"
+                  className="w-full px-3 py-2 border border-secondary-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+                />
+              </div>
+
+              <div className="flex gap-3 pt-4">
+                <button
+                  type="button"
+                  onClick={() => setShowModal(false)}
+                  disabled={isSubmitting}
+                  className="flex-1 px-4 py-2 border border-secondary-300 text-secondary-700 rounded-md hover:bg-secondary-50 disabled:opacity-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="flex-1 px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 disabled:opacity-50 flex items-center justify-center gap-2"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <ApperIcon name="Loader2" className="w-4 h-4 animate-spin" />
+                      Adding...
+                    </>
+                  ) : (
+                    "Add Doctor"
+                  )}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    );
+  }
 };
 
 export default DoctorsPage;
