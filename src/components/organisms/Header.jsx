@@ -1,6 +1,9 @@
 import React from "react";
 import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
+import { useContext } from "react";
+import { AuthContext } from "../../App";
+import { useSelector } from "react-redux";
 import SearchBar from "@/components/molecules/SearchBar";
 
 const Header = ({ onMenuClick, searchValue, onSearchChange }) => {
@@ -37,6 +40,23 @@ const Header = ({ onMenuClick, searchValue, onSearchChange }) => {
           <div className="hidden sm:block">
             <p className="text-sm font-medium text-secondary-900">Dr. Admin</p>
             <p className="text-xs text-secondary-500">Administrator</p>
+</div>
+          
+          <div className="flex items-center gap-3">
+            <div className="text-sm text-secondary-700">
+              Welcome back!
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                const { logout } = useContext(AuthContext);
+                logout();
+              }}
+            >
+              <ApperIcon name="LogOut" className="w-4 h-4 mr-2" />
+              Logout
+            </Button>
           </div>
         </div>
       </div>

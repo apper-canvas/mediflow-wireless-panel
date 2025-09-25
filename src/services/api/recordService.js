@@ -1,67 +1,219 @@
-import recordsData from "@/services/mockData/records.json";
-
 class RecordService {
   constructor() {
-    this.records = [...recordsData];
+    const { ApperClient } = window.ApperSDK;
+    this.apperClient = new ApperClient({
+      apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+      apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+    });
+    this.tableName = 'record_c';
   }
 
   async getAll() {
-    await this.delay(300);
-    return [...this.records];
+    try {
+      const params = {
+        fields: [
+          {"field": {"Name": "Name"}},
+          {"field": {"Name": "date_c"}},
+          {"field": {"Name": "diagnosis_c"}},
+          {"field": {"Name": "treatment_c"}},
+          {"field": {"Name": "prescription_c"}},
+          {"field": {"Name": "notes_c"}},
+          {"field": {"name": "patient_id_c"}, "referenceField": {"field": {"Name": "Name"}}},
+          {"field": {"name": "doctor_id_c"}, "referenceField": {"field": {"Name": "Name"}}}
+        ],
+        orderBy: [{"fieldName": "date_c", "sorttype": "DESC"}]
+      };
+      
+      const response = await this.apperClient.fetchRecords(this.tableName, params);
+      
+      if (!response.success) {
+        console.error(response.message);
+        throw new Error(response.message);
+      }
+      
+      return response.data || [];
+    } catch (error) {
+      console.error("Error fetching records:", error);
+      throw error;
+    }
   }
 
   async getById(id) {
-    await this.delay(200);
-    const record = this.records.find(r => r.Id === parseInt(id));
-    if (!record) {
-      throw new Error("Medical record not found");
+    try {
+      const params = {
+        fields: [
+          {"field": {"Name": "Name"}},
+          {"field": {"Name": "date_c"}},
+          {"field": {"Name": "diagnosis_c"}},
+          {"field": {"Name": "treatment_c"}},
+          {"field": {"Name": "prescription_c"}},
+          {"field": {"Name": "notes_c"}},
+          {"field": {"name": "patient_id_c"}, "referenceField": {"field": {"Name": "Name"}}},
+          {"field": {"name": "doctor_id_c"}, "referenceField": {"field": {"Name": "Name"}}}
+        ]
+      };
+      
+      const response = await this.apperClient.getRecordById(this.tableName, parseInt(id), params);
+      
+      if (!response.success) {
+        console.error(response.message);
+        throw new Error(response.message);
+      }
+      
+      return response.data;
+    } catch (error) {
+      console.error(`Error fetching record ${id}:`, error);
+      throw error;
     }
-    return { ...record };
   }
 
   async getByPatientId(patientId) {
-    await this.delay(250);
-    return this.records.filter(r => r.patientId === patientId.toString()).map(r => ({ ...r }));
+    try {
+      const params = {
+        fields: [
+          {"field": {"Name": "Name"}},
+          {"field": {"Name": "date_c"}},
+          {"field": {"Name": "diagnosis_c"}},
+          {"field": {"Name": "treatment_c"}},
+          {"field": {"Name": "prescription_c"}},
+          {"field": {"Name": "notes_c"}},
+          {"field": {"name": "patient_id_c"}, "referenceField": {"field": {"Name": "Name"}}},
+          {"field": {"name": "doctor_id_c"}, "referenceField": {"field": {"Name": "Name"}}}
+        ],
+        where: [{"FieldName": "patient_id_c", "Operator": "EqualTo", "Values": [parseInt(patientId)]}],
+        orderBy: [{"fieldName": "date_c", "sorttype": "DESC"}]
+      };
+      
+      const response = await this.apperClient.fetchRecords(this.tableName, params);
+      
+      if (!response.success) {
+        console.error(response.message);
+        throw new Error(response.message);
+      }
+      
+      return response.data || [];
+    } catch (error) {
+      console.error(`Error fetching records for patient ${patientId}:`, error);
+      throw error;
+    }
   }
 
   async create(recordData) {
-    await this.delay(400);
-    const newRecord = {
-      Id: this.getNextId(),
-      ...recordData,
-      date: recordData.date || new Date().toISOString().split("T")[0]
-    };
-    this.records.push(newRecord);
-    return { ...newRecord };
+    try {
+      const params = {
+        records: [{
+          Name: recordData.diagnosis || `Record for ${recordData.patientId}`,
+          date_c: recordData.date || new Date().toISOString().split("T")[0],
+          diagnosis_c: recordData.diagnosis,
+          treatment_c: recordData.treatment,
+          prescription_c: recordData.prescription,
+          notes_c: recordData.notes,
+          patient_id_c: parseInt(recordData.patientId),
+          doctor_id_c: parseInt(recordData.doctorId)
+        }]
+      };
+      
+      const response = await this.apperClient.createRecord(this.tableName, params);
+      
+      if (!response.success) {
+        console.error(response.message);
+        throw new Error(response.message);
+      }
+      
+      if (response.results) {
+        const successful = response.results.filter(r => r.success);
+        const failed = response.results.filter(r => !r.success);
+        
+        if (failed.length > 0) {
+          console.error(`Failed to create ${failed.length} records:`, failed);
+          throw new Error("Failed to create medical record");
+        }
+        
+        return successful[0]?.data;
+      }
+      
+      return response.data;
+    } catch (error) {
+      console.error("Error creating record:", error);
+      throw error;
+    }
   }
 
   async update(id, recordData) {
-    await this.delay(350);
-    const index = this.records.findIndex(r => r.Id === parseInt(id));
-    if (index === -1) {
-      throw new Error("Medical record not found");
+    try {
+      const params = {
+        records: [{
+          Id: parseInt(id),
+          Name: recordData.diagnosis || recordData.Name,
+          date_c: recordData.date,
+          diagnosis_c: recordData.diagnosis,
+          treatment_c: recordData.treatment,
+          prescription_c: recordData.prescription,
+          notes_c: recordData.notes,
+          patient_id_c: parseInt(recordData.patientId),
+          doctor_id_c: parseInt(recordData.doctorId)
+        }]
+      };
+      
+      const response = await this.apperClient.updateRecord(this.tableName, params);
+      
+      if (!response.success) {
+        console.error(response.message);
+        throw new Error(response.message);
+      }
+      
+      if (response.results) {
+        const successful = response.results.filter(r => r.success);
+        const failed = response.results.filter(r => !r.success);
+        
+        if (failed.length > 0) {
+          console.error(`Failed to update ${failed.length} records:`, failed);
+          throw new Error("Failed to update medical record");
+        }
+        
+        return successful[0]?.data;
+      }
+      
+      return response.data;
+    } catch (error) {
+      console.error("Error updating record:", error);
+      throw error;
     }
-    this.records[index] = { ...this.records[index], ...recordData };
-    return { ...this.records[index] };
   }
 
   async delete(id) {
-    await this.delay(250);
-    const index = this.records.findIndex(r => r.Id === parseInt(id));
-    if (index === -1) {
-      throw new Error("Medical record not found");
+    try {
+      const params = { 
+        RecordIds: [parseInt(id)]
+      };
+      
+      const response = await this.apperClient.deleteRecord(this.tableName, params);
+      
+      if (!response.success) {
+        console.error(response.message);
+        throw new Error(response.message);
+      }
+      
+      if (response.results) {
+        const successful = response.results.filter(r => r.success);
+        const failed = response.results.filter(r => !r.success);
+        
+        if (failed.length > 0) {
+          console.error(`Failed to delete ${failed.length} records:`, failed);
+          throw new Error("Failed to delete medical record");
+        }
+        
+        return successful.length > 0;
+      }
+      
+      return true;
+    } catch (error) {
+      console.error("Error deleting record:", error);
+      throw error;
     }
-    const deletedRecord = this.records.splice(index, 1)[0];
-    return { ...deletedRecord };
-  }
-
-  getNextId() {
-    return Math.max(...this.records.map(r => r.Id)) + 1;
-  }
-
-  delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
   }
 }
+
+export const recordService = new RecordService();
 
 export const recordService = new RecordService();

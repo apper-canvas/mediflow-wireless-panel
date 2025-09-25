@@ -1,79 +1,250 @@
-import medicinesData from "@/services/mockData/medicines.json";
-
 class MedicineService {
   constructor() {
-    this.medicines = [...medicinesData];
+    const { ApperClient } = window.ApperSDK;
+    this.apperClient = new ApperClient({
+      apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+      apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+    });
+    this.tableName = 'medicine_c';
   }
 
   async getAll() {
-    await this.delay(300);
-    return [...this.medicines];
+    try {
+      const params = {
+        fields: [
+          {"field": {"Name": "Name"}},
+          {"field": {"Name": "name_c"}},
+          {"field": {"Name": "category_c"}},
+          {"field": {"Name": "stock_c"}},
+          {"field": {"Name": "min_threshold_c"}},
+          {"field": {"Name": "price_c"}},
+          {"field": {"Name": "expiry_date_c"}}
+        ],
+        orderBy: [{"fieldName": "Name", "sorttype": "ASC"}]
+      };
+      
+      const response = await this.apperClient.fetchRecords(this.tableName, params);
+      
+      if (!response.success) {
+        console.error(response.message);
+        throw new Error(response.message);
+      }
+      
+      return response.data || [];
+    } catch (error) {
+      console.error("Error fetching medicines:", error);
+      throw error;
+    }
   }
 
   async getById(id) {
-    await this.delay(200);
-    const medicine = this.medicines.find(m => m.Id === parseInt(id));
-    if (!medicine) {
-      throw new Error("Medicine not found");
+    try {
+      const params = {
+        fields: [
+          {"field": {"Name": "Name"}},
+          {"field": {"Name": "name_c"}},
+          {"field": {"Name": "category_c"}},
+          {"field": {"Name": "stock_c"}},
+          {"field": {"Name": "min_threshold_c"}},
+          {"field": {"Name": "price_c"}},
+          {"field": {"Name": "expiry_date_c"}}
+        ]
+      };
+      
+      const response = await this.apperClient.getRecordById(this.tableName, parseInt(id), params);
+      
+      if (!response.success) {
+        console.error(response.message);
+        throw new Error(response.message);
+      }
+      
+      return response.data;
+    } catch (error) {
+      console.error(`Error fetching medicine ${id}:`, error);
+      throw error;
     }
-    return { ...medicine };
   }
 
   async getLowStock() {
-    await this.delay(250);
-    return this.medicines.filter(m => m.stock <= m.minThreshold).map(m => ({ ...m }));
+    try {
+      const params = {
+        fields: [
+          {"field": {"Name": "Name"}},
+          {"field": {"Name": "name_c"}},
+          {"field": {"Name": "category_c"}},
+          {"field": {"Name": "stock_c"}},
+          {"field": {"Name": "min_threshold_c"}},
+          {"field": {"Name": "price_c"}},
+          {"field": {"Name": "expiry_date_c"}}
+        ],
+        whereGroups: [{
+          "operator": "AND",
+          "subGroups": [{
+            "conditions": [{
+              "fieldName": "stock_c",
+              "operator": "LessThanOrEqualTo",
+              "values": ["min_threshold_c"]
+            }],
+            "operator": "AND"
+          }]
+        }]
+      };
+      
+      const response = await this.apperClient.fetchRecords(this.tableName, params);
+      
+      if (!response.success) {
+        console.error(response.message);
+        throw new Error(response.message);
+      }
+      
+      return response.data || [];
+    } catch (error) {
+      console.error("Error fetching low stock medicines:", error);
+      throw error;
+    }
   }
 
   async create(medicineData) {
-    await this.delay(400);
-    const newMedicine = {
-      Id: this.getNextId(),
-      ...medicineData
-    };
-    this.medicines.push(newMedicine);
-    return { ...newMedicine };
+    try {
+      const params = {
+        records: [{
+          Name: medicineData.name || medicineData.Name,
+          name_c: medicineData.name,
+          category_c: medicineData.category,
+          stock_c: parseInt(medicineData.stock),
+          min_threshold_c: parseInt(medicineData.minThreshold || medicineData.min_threshold_c),
+          price_c: parseFloat(medicineData.price),
+          expiry_date_c: medicineData.expiryDate || medicineData.expiry_date_c
+        }]
+      };
+      
+      const response = await this.apperClient.createRecord(this.tableName, params);
+      
+      if (!response.success) {
+        console.error(response.message);
+        throw new Error(response.message);
+      }
+      
+      if (response.results) {
+        const successful = response.results.filter(r => r.success);
+        const failed = response.results.filter(r => !r.success);
+        
+        if (failed.length > 0) {
+          console.error(`Failed to create ${failed.length} records:`, failed);
+          throw new Error("Failed to create medicine record");
+        }
+        
+        return successful[0]?.data;
+      }
+      
+      return response.data;
+    } catch (error) {
+      console.error("Error creating medicine:", error);
+      throw error;
+    }
   }
 
   async update(id, medicineData) {
-    await this.delay(350);
-    const index = this.medicines.findIndex(m => m.Id === parseInt(id));
-    if (index === -1) {
-      throw new Error("Medicine not found");
+    try {
+      const params = {
+        records: [{
+          Id: parseInt(id),
+          Name: medicineData.name || medicineData.Name,
+          name_c: medicineData.name,
+          category_c: medicineData.category,
+          stock_c: parseInt(medicineData.stock),
+          min_threshold_c: parseInt(medicineData.minThreshold || medicineData.min_threshold_c),
+          price_c: parseFloat(medicineData.price),
+          expiry_date_c: medicineData.expiryDate || medicineData.expiry_date_c
+        }]
+      };
+      
+      const response = await this.apperClient.updateRecord(this.tableName, params);
+      
+      if (!response.success) {
+        console.error(response.message);
+        throw new Error(response.message);
+      }
+      
+      if (response.results) {
+        const successful = response.results.filter(r => r.success);
+        const failed = response.results.filter(r => !r.success);
+        
+        if (failed.length > 0) {
+          console.error(`Failed to update ${failed.length} records:`, failed);
+          throw new Error("Failed to update medicine record");
+        }
+        
+        return successful[0]?.data;
+      }
+      
+      return response.data;
+    } catch (error) {
+      console.error("Error updating medicine:", error);
+      throw error;
     }
-    this.medicines[index] = { ...this.medicines[index], ...medicineData };
-    return { ...this.medicines[index] };
   }
 
   async updateStock(id, quantity) {
-    await this.delay(300);
-    const index = this.medicines.findIndex(m => m.Id === parseInt(id));
-    if (index === -1) {
-      throw new Error("Medicine not found");
+    try {
+      // First get current record
+      const current = await this.getById(id);
+      const newStock = Math.max(0, (current.stock_c || 0) + quantity);
+      
+      const params = {
+        records: [{
+          Id: parseInt(id),
+          stock_c: newStock
+        }]
+      };
+      
+      const response = await this.apperClient.updateRecord(this.tableName, params);
+      
+      if (!response.success) {
+        console.error(response.message);
+        throw new Error(response.message);
+      }
+      
+      return response.results?.[0]?.data || response.data;
+    } catch (error) {
+      console.error("Error updating medicine stock:", error);
+      throw error;
     }
-    this.medicines[index].stock += quantity;
-    if (this.medicines[index].stock < 0) {
-      this.medicines[index].stock = 0;
-    }
-    return { ...this.medicines[index] };
   }
 
   async delete(id) {
-    await this.delay(250);
-    const index = this.medicines.findIndex(m => m.Id === parseInt(id));
-    if (index === -1) {
-      throw new Error("Medicine not found");
+    try {
+      const params = { 
+        RecordIds: [parseInt(id)]
+      };
+      
+      const response = await this.apperClient.deleteRecord(this.tableName, params);
+      
+      if (!response.success) {
+        console.error(response.message);
+        throw new Error(response.message);
+      }
+      
+      if (response.results) {
+        const successful = response.results.filter(r => r.success);
+        const failed = response.results.filter(r => !r.success);
+        
+        if (failed.length > 0) {
+          console.error(`Failed to delete ${failed.length} records:`, failed);
+          throw new Error("Failed to delete medicine record");
+        }
+        
+        return successful.length > 0;
+      }
+      
+      return true;
+    } catch (error) {
+      console.error("Error deleting medicine:", error);
+      throw error;
     }
-    const deletedMedicine = this.medicines.splice(index, 1)[0];
-    return { ...deletedMedicine };
-  }
-
-  getNextId() {
-    return Math.max(...this.medicines.map(m => m.Id)) + 1;
-  }
-
-  delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
   }
 }
+
+export const medicineService = new MedicineService();
 
 export const medicineService = new MedicineService();
